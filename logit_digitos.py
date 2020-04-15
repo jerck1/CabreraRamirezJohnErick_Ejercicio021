@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[35]:
+# In[1]:
 
 
 import matplotlib.pyplot as plt
@@ -18,7 +18,7 @@ from sklearn.metrics import confusion_matrix
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[13]:
+# In[2]:
 
 
 numeros = skdata.load_digits()
@@ -28,16 +28,16 @@ n_imagenes = len(target)
 print(np.shape(imagenes), n_imagenes) # Hay 1797 digitos representados en imagenes 8x8
 
 
-# In[20]:
+# In[19]:
 
 
-i=20 # este es uno de esos digitos
+i=1796# este es uno de esos digitos
 _ = plt.imshow(imagenes[i])
 plt.title('{}'.format(target[i]))
 print(imagenes[i])
 
 
-# In[21]:
+# In[4]:
 
 
 # para poder correr PCA debemos "aplanar las imagenes"
@@ -45,14 +45,14 @@ data = imagenes.reshape((n_imagenes, -1)) # para volver a tener los datos como i
 print(np.shape(data))
 
 
-# In[16]:
+# In[5]:
 
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
 
-# In[41]:
+# In[6]:
 
 
 # Vamos a hacer un split training test
@@ -60,14 +60,14 @@ scaler = StandardScaler()
 x_train, x_test, y_train, y_test = train_test_split(data, target, train_size=0.5)
 
 
-# In[42]:
+# In[7]:
 
 
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
 
-# In[43]:
+# In[8]:
 
 
 # Turn up tolerance for faster convergence
@@ -76,21 +76,21 @@ train_samples = int(n_imagenes/2)
 clf = LogisticRegression(
     C=50. / train_samples, penalty='l1', solver='saga', tol=0.1)#,multi_class='multinomial'
 clf.fit(x_train, y_train)
+
+
+# In[9]:
+
+
 #predicciones sobre los valores de los dígitos
-y_pred=clf.predict(x_train)
+y_pred=clf.predict(x_test)
 sparsity = np.mean(clf.coef_ == 0) * 100
 score = clf.score(x_test, y_test)
-
-
-# In[44]:
-
-
 # print('Best C % .4f' % clf.C_)
 print("Sparsity with L1 penalty: %.2f%%" % sparsity)
 print("Test score with L1 penalty: %.4f" % score)
 
 
-# In[45]:
+# In[10]:
 
 
 coef = clf.coef_.copy()
@@ -107,36 +107,18 @@ plt.suptitle('Classification vector for...')
 plt.savefig("coeficientes.png")
 
 
-# In[46]:
+# In[11]:
 
 
 np.shape(coef)
 
 
-# In[49]:
+# In[12]:
 
 
 #confusion_matrix(y_true, y_pred)
-plt.imshow(confusion_matrix(y_train, y_pred))
+plt.imshow(confusion_matrix(y_test, y_pred))
 plt.savefig("confusion.png")
-
-
-# In[36]:
-
-
-y_train
-
-
-# In[38]:
-
-
-np.shape()
-
-
-# In[39]:
-
-
-np.shape(x_train)
 
 
 # In[ ]:
