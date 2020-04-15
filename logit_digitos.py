@@ -28,15 +28,6 @@ n_imagenes = len(target)
 print(np.shape(imagenes), n_imagenes) # Hay 1797 digitos representados en imagenes 8x8
 
 
-# In[19]:
-
-
-i=1796# este es uno de esos digitos
-_ = plt.imshow(imagenes[i])
-plt.title('{}'.format(target[i]))
-print(imagenes[i])
-
-
 # In[4]:
 
 
@@ -107,17 +98,23 @@ plt.suptitle('Classification vector for...')
 plt.savefig("coeficientes.png")
 
 
-# In[11]:
-
-
-np.shape(coef)
-
-
-# In[12]:
+# In[43]:
 
 
 #confusion_matrix(y_true, y_pred)
-plt.imshow(confusion_matrix(y_test, y_pred))
+conf_matrix=confusion_matrix(y_test, y_pred)
+plt.imshow(conf_matrix)
+max=np.max(conf_matrix)
+min=np.min(conf_matrix)
+plt.colorbar(boundaries=np.arange(min,max,5)-2.5).set_ticks(np.arange(min,max,5))
+plt.xlabel('Predicted label')
+plt.ylabel('True label')
+for i in range(len(conf_matrix[:,0])):
+    for j in range(len(conf_matrix[0,:])):
+        if(conf_matrix[i,j]<10):
+            plt.text(i-0.25, j, conf_matrix[i,j],color='green', fontsize=12)
+        else:
+            plt.text(i-0.25, j, conf_matrix[i,j],color='black', fontsize=12)
 plt.savefig("confusion.png")
 
 
