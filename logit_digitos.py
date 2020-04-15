@@ -81,12 +81,13 @@ print("Sparsity with L1 penalty: %.2f%%" % sparsity)
 print("Test score with L1 penalty: %.4f" % score)
 
 
-# In[10]:
+# In[45]:
 
 
 coef = clf.coef_.copy()
 plt.figure(figsize=(10, 5))
 scale = np.abs(coef).max()
+plt.figure()
 for i in range(10):
     l1_plot = plt.subplot(2, 5, i + 1)
     l1_plot.imshow(coef[i].reshape(8, 8), interpolation='nearest',
@@ -98,11 +99,12 @@ plt.suptitle('Classification vector for...')
 plt.savefig("coeficientes.png")
 
 
-# In[43]:
+# In[46]:
 
 
 #confusion_matrix(y_true, y_pred)
 conf_matrix=confusion_matrix(y_test, y_pred)
+plt.figure()
 plt.imshow(conf_matrix)
 max=np.max(conf_matrix)
 min=np.min(conf_matrix)
