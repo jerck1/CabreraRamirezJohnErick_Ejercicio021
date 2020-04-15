@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils import check_random_state
 from sklearn.metrics import confusion_matrix
-get_ipython().run_line_magic('matplotlib', 'inline')
+#%matplotlib inline
 
 
 # In[2]:
